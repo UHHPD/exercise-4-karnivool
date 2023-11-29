@@ -85,6 +85,7 @@ int main() {
     cout << "Difference to next dataset: ";
     cout << ds2.measurement(27) - ds1.measurement(27) << endl;
     cout << "sigma: " << sigma << ", 2 sigma: " << 2*sigma << endl;
+    cout << "Disagreeing values (n=1): " << ds1.checkCompatibility(ds2, 1) << endl;
   }
 
   cout << "******************************************************" << endl;

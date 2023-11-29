@@ -14,10 +14,12 @@ class Data {
   double binLow(int i) const { return m_bins[i]; }
   double binHigh(int i) const { return m_bins[i+1]; }
   double error(int i) const { return m_uncertainty[i]; }
+  int checkCompatibility(const Data& in, int n);
 
  private:
   Data() {}  // disallow empty data set
   void assertSizes();
+  double combinedDeviation(const Data& in, int i);
   std::vector<double> m_data;
   std::vector<double> m_bins;
   std::vector<double> m_uncertainty;
