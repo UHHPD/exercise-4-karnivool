@@ -19,17 +19,24 @@ Data::Data(const std::string& filename) {
   int size = -1;
   file >> size;
 
-  // read in data from file: m_siz+1 bin edges
+  // read in data from file: size+1 bin edges
   for (int i = 0; i < size + 1; ++i) {
     double edge;
     file >> edge;
     m_bins.push_back(edge);
   }
-  // read in data from file: m_siz bin contents
+  // read in data from file: size bin contents
   for (int i = 0; i < size; ++i) {
     double entries;
     file >> entries;
     m_data.push_back(entries);
+  }
+
+  // read in uncertainties from file: size bin contents
+  for (int i = 0; i < size; ++i) {
+    double uncertainty;
+    file >> uncertainty;
+    m_uncertainty.push_back(uncertainty);
   }
 
   // done! close the file
