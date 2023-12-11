@@ -7,6 +7,7 @@
 class Data {
  public:
   Data(const std::string& filename);
+  Data(const Data& obj);
 
   unsigned int size() const { return m_data.size(); }
   double measurement(int i) const { return m_data[i]; }
@@ -15,6 +16,7 @@ class Data {
   double binHigh(int i) const { return m_bins[i+1]; }
   double error(int i) const { return m_uncertainty[i]; }
   int checkCompatibility(const Data& in, int n);
+  Data operator+(const Data& other);
 
  private:
   Data() {}  // disallow empty data set

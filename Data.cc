@@ -46,6 +46,12 @@ Data::Data(const std::string& filename) {
   assertSizes();
 };
 
+Data::Data(const Data& obj) {
+  m_bins = obj.m_bins;
+  m_data = obj.m_data;
+  m_uncertainty = obj.m_uncertainty;
+}
+
 
 int Data::checkCompatibility(const Data& in, int n) {
   int disagreeingValues = 0;
@@ -55,6 +61,18 @@ int Data::checkCompatibility(const Data& in, int n) {
       disagreeingValues++;
   }
   return disagreeingValues;
+}
+
+Data Data::operator+(const Data& other) {
+  Data res = other;
+  for (int i=0; i<size(); i++) {
+    double omega = 1/pow(error(i), 2);
+    double omega_oth = 1/pow(other.error(i), 2);
+
+    res.m_data[i] = (omega * measurement(i) + omega_oth * other.measurement(i)) / (omega + omega_oth);
+    res.m_uncertainty[i] = sqrt(1/(omega + omega_oth));
+  }
+  return res;
 }
 
 double Data::combinedDeviation(const Data& in, int i) {

@@ -76,7 +76,8 @@ int main() {
 
   for(int i=0; i<datasets.size(); i++) {
     cout << "Crosssection in bin 27 for experiment ";
-    cout << datasetnames[i] << ": " << datasets[i].measurement(27) << endl;
+    cout << datasetnames[i] << ": " << datasets[i].measurement(27);
+    cout << " +- " << datasets[i].error(27) << endl;
 
     Data ds1 = datasets[i];
     Data ds2 = datasets[(i+1) % 4];
@@ -89,14 +90,15 @@ int main() {
   }
 
   cout << "******************************************************" << endl;
-  // create an object which holds data of experiment A
-  Data datA("exp_A");
 
-  // here is the data from experiment A
-  cout << "bin 27: from " << datA.binLow(27) << " to " << datA.binHigh(27)
-       << endl;
-  cout << "measurement of experiment A in bin 27: " << datA.measurement(27)
-       << endl;
+  Data combinedDataset = datasets[0];
+  for (int i=1; i<datasets.size(); i++) {
+    combinedDataset = combinedDataset + datasets[i];
+  }
+
+  cout << "Crosssection in bin 27 for combined experiments";
+  cout << ": " << combinedDataset.measurement(27);
+  cout << " +- " << combinedDataset.error(27) << endl;
 
   return 0;
 }
