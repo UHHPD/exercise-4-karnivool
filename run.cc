@@ -100,5 +100,24 @@ int main() {
   cout << ": " << combinedDataset.measurement(27);
   cout << " +- " << combinedDataset.error(27) << endl;
 
+  cout << "******************************************************" << endl;
+
+  for (int i=0; i<datasets.size()-1; i++) {
+    for (int j=i+1; j<datasets.size(); j++) {
+      cout << "Comparing datasets " << datasetnames[i];
+      cout << " and " << datasetnames[j] << ":" << endl;
+
+      cout << "  Values differing by 2 sigma: ";
+      cout << datasets[i].checkCompatibility(datasets[j], 2) << endl;
+      cout << "  Values differing by 3 sigma: ";
+      cout << datasets[i].checkCompatibility(datasets[j], 3) << endl;
+    }
+  }
+
+  cout << "Expected differing values: " << endl;
+  cout << "  2 sigma: " << (1 - 0.954) * datasets[0].size() << endl;
+  cout << "  3 sigma: " << (1 - 0.997) * datasets[0].size() << endl;
+
+
   return 0;
 }
