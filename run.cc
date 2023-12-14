@@ -61,6 +61,12 @@ void runTests() {
     std::cout << (test() ? " ok" : " FAILED!") << std::endl;
 }
 
+
+double backgroundModel(double x) {
+  return 0.005 - 0.00001 * x + 0.08 * exp(-0.015 * x);
+}
+
+
 int main() {
   using namespace std;
 
@@ -102,6 +108,8 @@ int main() {
 
   cout << "******************************************************" << endl;
 
+  // Exercise 2
+
   for (int i=0; i<datasets.size()-1; i++) {
     for (int j=i+1; j<datasets.size(); j++) {
       cout << "Comparing datasets " << datasetnames[i];
@@ -118,6 +126,16 @@ int main() {
   cout << "  2 sigma: " << (1 - 0.954) * datasets[0].size() << endl;
   cout << "  3 sigma: " << (1 - 0.997) * datasets[0].size() << endl;
 
+  cout << "******************************************************" << endl;
+
+  cout << "Chi^2 comparison with background" << endl;
+
+  for (int i=0; i<datasets.size(); i++) {
+    cout << "  Dataset " << datasetnames[i] << ": ";
+    cout << datasets[i].chiSquare(backgroundModel, 4) << endl;
+  }
+
+  cout << "  Combined Dataset: " << combinedDataset.chiSquare(backgroundModel, 4) << endl;
 
   return 0;
 }

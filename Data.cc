@@ -5,6 +5,7 @@
 #include <cassert>
 #include <stdexcept>
 #include <cmath>
+#include <functional>
 
 using namespace std;
 
@@ -50,6 +51,15 @@ Data::Data(const Data& obj) {
   m_bins = obj.m_bins;
   m_data = obj.m_data;
   m_uncertainty = obj.m_uncertainty;
+}
+
+double Data::chiSquare(function<double (double)> prediction, int freeParameters) {
+  double chiSquare = 0;
+  for (int i=0; i<size(); i++) {
+    chiSquare += pow(measurement(i) - prediction(binCenter(i)), 2) / pow(error(i), 2);
+  }
+
+  return chiSquare / (size() - freeParameters);
 }
 
 

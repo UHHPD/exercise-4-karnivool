@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <functional>
 
 class Data {
  public:
@@ -17,6 +18,7 @@ class Data {
   double error(int i) const { return m_uncertainty[i]; }
   int checkCompatibility(const Data& in, int n);
   Data operator+(const Data& other);
+  double chiSquare(std::function<double (double)> prediction, int freeParameters);
 
  private:
   Data() {}  // disallow empty data set
